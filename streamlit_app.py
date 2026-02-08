@@ -4,10 +4,10 @@ import numpy as np
 import sqlite3
 from datetime import date
 
-# ------------------ Page Config ------------------
+
 st.set_page_config(page_title="Disease Prediction System", layout="centered")
 
-# ------------------ Database ------------------
+
 conn = sqlite3.connect("users.db", check_same_thread=False)
 c = conn.cursor()
 
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS users (
 """)
 conn.commit()
 
-# ------------------ Helper Functions ------------------
+
 def signup(data):
     c.execute("INSERT INTO users VALUES (?,?,?,?,?,?,?,?,?)", data)
     conn.commit()
@@ -53,18 +53,18 @@ def update_user(data):
     """, data)
     conn.commit()
 
-# ------------------ Load Models ------------------
+
 diabetes_model = pickle.load(open("diabetes_model.pkl", "rb"))
 diabetes_scaler = pickle.load(open("diabetes_scaler.pkl", "rb"))
 
 heart_model = pickle.load(open("heart_model.pkl", "rb"))
 heart_scaler = pickle.load(open("heart_scaler.pkl", "rb"))
 
-# ------------------ Session ------------------
+
 if "page" not in st.session_state:
     st.session_state.page = "login"
 
-# ------------------ LOGIN PAGE ------------------
+
 if st.session_state.page == "login":
     st.title("🔐 Patient Login")
 
@@ -82,7 +82,7 @@ if st.session_state.page == "login":
     if st.button("New patient? Sign Up"):
         st.session_state.page = "signup"
 
-# ------------------ SIGNUP PAGE ------------------
+
 elif st.session_state.page == "signup":
     st.title("📝 Patient Registration")
 
@@ -120,7 +120,7 @@ elif st.session_state.page == "signup":
         if st.button("Back"):
             st.session_state.page = "login"
 
-# ------------------ DASHBOARD ------------------
+
 elif st.session_state.page == "dashboard":
     st.title("🏥 Patient Dashboard")
 
@@ -172,7 +172,7 @@ elif st.session_state.page == "dashboard":
         if st.button("Logout"):
             st.session_state.page = "login"
 
-# ------------------ EDIT PROFILE ------------------
+
 elif st.session_state.page == "edit_profile":
     st.title("✏️ Edit Patient Profile")
 
@@ -207,7 +207,7 @@ elif st.session_state.page == "edit_profile":
         if st.button("Back"):
             st.session_state.page = "dashboard"
 
-# ------------------ HEART DISEASE PAGE ------------------
+
 elif st.session_state.page == "heart":
     st.title("❤️ Heart Disease Prediction")
 
@@ -243,7 +243,7 @@ elif st.session_state.page == "heart":
         if st.button("Back"):
             st.session_state.page = "dashboard"
 
-# ------------------ DIABETES PAGE ------------------
+
 elif st.session_state.page == "diabetes":
     st.title("🩸 Diabetes Prediction")
 
